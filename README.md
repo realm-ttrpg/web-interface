@@ -1,6 +1,6 @@
 # Realm TTRPG web interface
 
-A web interface for use with the associated [bot software][] and [api server][]
+A web interface for use with the associated [bot software][] and [API server][]
 to facilitate the play and administration of [tabletop roleplaying games][]
 
 ![realm](https://raw.githubusercontent.com/realm-ttrpg/web-interface/assets/banner.jpg)
