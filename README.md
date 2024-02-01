@@ -7,11 +7,20 @@ play and administration of [tabletop roleplaying games][]
 
 ## Installing
 
-TODO
+```shell
+npm login --scope @haliphax  # password is your GitHub auth token
+npm ci
+npm run build
+```
 
 ## Running
 
-TODO
+Either serve the contents of the `html/` folder yourself or use the development
+server:
+
+```shell
+npm run dev
+```
 
 [bot software]: https://github.com/realm-ttrpg/discord-bot
 [tabletop roleplaying games]: https://en.wikipedia.org/wiki/Tabletop_role-playing_game
