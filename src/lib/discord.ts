@@ -2,11 +2,6 @@ import Cookies from "js-cookie";
 
 const API_BASE = "https://discord.com/api/v10";
 
-// @ts-ignore
-const clientId = import.meta.env.VITE_APP_CLIENT_ID;
-const oauthScope = ["identify", "guilds", "guilds.members.read"];
-const redirectUri = window.location.href;
-
 export interface Thing {
 	id: number;
 }
@@ -21,6 +16,11 @@ export interface User extends NamedThing {
 }
 
 export const getDiscordToken = () => {
+	// @ts-ignore
+	const clientId = import.meta.env.VITE_APP_CLIENT_ID;
+	const oauthScope = ["identify", "guilds", "guilds.members.read"];
+	const redirectUri = window.location.href;
+
 	const urlMatch = /\baccess_token=([^&]+)/i.exec(window.location.hash);
 	const urlToken = urlMatch ? urlMatch[1] : null;
 	const token = urlToken ?? Cookies.get("token");
