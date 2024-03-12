@@ -23,6 +23,11 @@ export const getDiscordToken = () => {
 
 	const urlMatch = /\baccess_token=([^&]+)/i.exec(window.location.hash);
 	const urlToken = urlMatch ? urlMatch[1] : null;
+
+	if (urlToken) {
+		Cookies.set("token", urlToken, { expires: 30, sameSite: "strict" });
+	}
+
 	const token = urlToken ?? Cookies.get("token");
 
 	if (!token) {
@@ -32,8 +37,6 @@ export const getDiscordToken = () => {
 
 		throw "Retrieving auth token";
 	}
-
-	Cookies.set("token", token, { expires: 30, sameSite: "strict" });
 
 	return token;
 };
