@@ -1,6 +1,6 @@
 import "@haliphax/nubbins/dist/nubbins.min.css";
 import { createApp } from "vue";
-import Wrapper from "./lib/components/wrapper.vue";
+import Wrapper from "./components/wrapper.vue";
 
 try {
 	createApp(Wrapper).mount("#app");

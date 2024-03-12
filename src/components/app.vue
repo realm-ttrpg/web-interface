@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { ref } from "vue";
-import { getDiscordGuilds, getDiscordToken, getDiscordUser } from "../discord";
+import {
+	getDiscordGuilds,
+	getDiscordToken,
+	getDiscordUser,
+} from "../lib/discord";
 import DiscordAvatar from "./discord-avatar.vue";
 
 const token = getDiscordToken();
