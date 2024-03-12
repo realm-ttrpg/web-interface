@@ -23,9 +23,10 @@ jobs:
           node-version-file: .nvmrc
           registry-url: https://npm.pkg.github.com
           scope: "@haliphax"
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm ci --ignore-scripts
 
       - name: Build site
