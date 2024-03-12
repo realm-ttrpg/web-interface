@@ -30,6 +30,8 @@ jobs:
         run: npm ci --ignore-scripts
 
       - name: Build site
+        env:
+          VITE_APP_CLIENT_ID: ${{ vars.VITE_APP_CLIENT_ID }}
         run: npm run build
 
       - name: Relative URLs
