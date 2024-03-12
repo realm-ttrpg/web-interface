@@ -1,11 +1,26 @@
 import Cookies from "js-cookie";
 
+const API_BASE = "https://discord.com/api/v10";
+
 // @ts-ignore
 const clientId = import.meta.env.VITE_APP_CLIENT_ID;
 const oauthScope = ["identify", "guilds", "guilds.members.read"];
 const redirectUri = window.location.href;
 
-export const getDiscordUser = async () => {
+export interface Thing {
+	id: number;
+}
+
+export interface NamedThing extends Thing {
+	name: string;
+}
+
+export interface User extends NamedThing {
+	avatar: string;
+	username: string;
+}
+
+export const getDiscordToken = () => {
 	const urlMatch = /\baccess_token=([^&]+)/i.exec(window.location.hash);
 	const urlToken = urlMatch ? urlMatch[1] : null;
 	const token = urlToken ?? Cookies.get("token");
@@ -20,9 +35,20 @@ export const getDiscordUser = async () => {
 
 	Cookies.set("token", token, { expires: 30, sameSite: "strict" });
 
-	return await fetch("https://discord.com/api/v10/oauth2/@me", {
+	return token;
+};
+
+const discordApi = async (token: string, url: string) =>
+	await fetch(`${API_BASE}${url}`, {
 		headers: { Authorization: `Bearer ${token}` },
-	})
+	});
+
+export const getDiscordUser = async (token: string): Promise<User> =>
+	await discordApi(token, "/oauth2/@me")
 		.then((r) => r.json())
 		.then((d) => d.user);
-};
+
+export const getDiscordGuilds = async (
+	token: string,
+): Promise<Array<NamedThing>> =>
+	await discordApi(token, "/users/@me/guilds").then((r) => r.json());

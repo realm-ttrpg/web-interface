@@ -1,3 +1,4 @@
+import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
 import { defineConfig } from "vite";
 
@@ -12,6 +13,7 @@ export default defineConfig({
 		},
 		target: "esnext",
 	},
+	plugins: [vue()],
 	server: {
 		cors: true,
 	},

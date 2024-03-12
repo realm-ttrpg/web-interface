@@ -1,9 +1,9 @@
 import "@haliphax/nubbins/dist/nubbins.min.css";
-import { getDiscordUser } from "./lib/discord";
+import { createApp } from "vue";
+import Wrapper from "./lib/components/wrapper.vue";
 
-const user = await getDiscordUser();
-document.querySelector("p")!.innerHTML = `
-	You are logged in as
-	<img class="dib" height="24" width="24" src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.jpg?size=24" />
-	<strong>${user.username}</strong>.
-	`;
+try {
+	createApp(Wrapper).mount("#app");
+} catch (ex) {
+	document.getElementById("app")!.innerText = "Something went wrong.";
+}

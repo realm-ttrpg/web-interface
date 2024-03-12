@@ -1,6 +1,6 @@
 {
 	"devDependencies": {
-		"@haliphax/nubbins": "^0.0.7",
+		"@haliphax/nubbins": "^0.0.8",
 		"@semantic-release/changelog": "^6.0.3",
 		"@semantic-release/git": "^10.0.1",
 		"@semantic-release/github": "^9.2.1",
@@ -8,6 +8,7 @@
 		"@types/node": "^20.8.8",
 		"@typescript-eslint/eslint-plugin": "^6.9.0",
 		"@typescript-eslint/parser": "^6.9.0",
+		"@vitejs/plugin-vue": "^5.0.4",
 		"eslint": "^8.52.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-prettier": "^5.0.1",
@@ -19,7 +20,8 @@
 		"semantic-release-gitmoji": "^1.6.5",
 		"semantic-release-replace-plugin": "^1.2.7",
 		"typescript": "^5.2.2",
-		"vite": "^4.5.1"
+		"vite": "^5.1.6",
+		"vue": "^3.4.21"
 	},
 	"engines": {
 		"node": "^20"
