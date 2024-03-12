@@ -1,5 +1,9 @@
 import "@haliphax/nubbins/dist/nubbins.min.css";
+import { getDiscordUser } from "./lib/discord";
 
-const hi = document.createElement("p");
-hi.innerText = "Hi! This text was added dynamically.";
-document.querySelector("body > .c")!.appendChild(hi);
+const user = await getDiscordUser();
+document.querySelector("p")!.innerHTML = `
+	You are logged in as
+	<img class="dib" height="24" width="24" src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.jpg?size=24" />
+	<strong>${user.username}</strong>.
+	`;
