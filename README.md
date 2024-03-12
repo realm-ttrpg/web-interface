@@ -9,7 +9,6 @@ to facilitate the play and administration of [tabletop roleplaying games][]
 
 ```shell
 npm login --scope @haliphax  # password is your GitHub auth token
-npm ci
 npm run build
 ```
 
