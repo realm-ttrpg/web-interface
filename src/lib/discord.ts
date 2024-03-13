@@ -19,7 +19,7 @@ export const getNewDiscordToken = () => {
 	// @ts-ignore
 	const clientId = import.meta.env.VITE_APP_CLIENT_ID;
 	const oauthScope = ["identify", "guilds", "guilds.members.read"];
-	const redirectUri = window.location.href;
+	const redirectUri = window.location.href.replace(/[#?].*$/, "");
 
 	Cookies.remove("token");
 	window.location.assign(
