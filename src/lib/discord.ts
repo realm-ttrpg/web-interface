@@ -15,12 +15,21 @@ export interface User extends NamedThing {
 	username: string;
 }
 
-export const getDiscordToken = () => {
+export const getNewDiscordToken = () => {
 	// @ts-ignore
 	const clientId = import.meta.env.VITE_APP_CLIENT_ID;
 	const oauthScope = ["identify", "guilds", "guilds.members.read"];
 	const redirectUri = window.location.href;
 
+	Cookies.remove("token");
+	window.location.assign(
+		`https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${oauthScope.join("+")}`,
+	);
+
+	throw "Retrieving auth token";
+};
+
+export const getDiscordToken = () => {
 	const urlMatch = /\baccess_token=([^&]+)/i.exec(window.location.hash);
 	const urlToken = urlMatch ? urlMatch[1] : null;
 
@@ -31,11 +40,8 @@ export const getDiscordToken = () => {
 	const token = urlToken ?? Cookies.get("token");
 
 	if (!token) {
-		window.location.assign(
-			`https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${oauthScope.join("+")}`,
-		);
-
-		throw "Retrieving auth token";
+		getNewDiscordToken();
+		return "";
 	}
 
 	return token;

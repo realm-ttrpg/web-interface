@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref } from "vue";
+import { getLoginToken } from "../lib/auth";
 import {
 	getDiscordGuilds,
 	getDiscordToken,
@@ -7,11 +8,21 @@ import {
 } from "../lib/discord";
 import DiscordAvatar from "./discord-avatar.vue";
 
+// make sure we're logged into discord
 const token = getDiscordToken();
+
+// get discord user info
 const user = ref(await getDiscordUser(token));
+
+// log into realm
+getLoginToken(user.value, token);
+
+// get list of guilds user is in
 const guilds = ref(
 	(await getDiscordGuilds(token)).sort((a, b) => a.name.localeCompare(b.name)),
 );
+
+// TODO use login token to filter list of guilds to those shared w/ bot
 </script>
 
 <template>

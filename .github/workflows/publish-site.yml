@@ -36,6 +36,7 @@ jobs:
       - name: Build site
         env:
           VITE_APP_CLIENT_ID: ${{ vars.VITE_APP_CLIENT_ID }}
+          VITE_APP_REALM_API: ${{ vars.VITE_APP_REALM_API }}
         run: npm run build
 
       - name: Relative URLs
