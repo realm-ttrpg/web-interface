@@ -40,7 +40,9 @@ jobs:
         run: npm run build
 
       - name: Relative URLs
-        run: sed -i -e 's/="\//="/g' html/*.html
+        run: |
+          sed -i -e 's/="\//="/g' html/*.html
+          sed -i -e 's/url(\//url(/g' html/assets/*.css
 
       - uses: actions/upload-pages-artifact@v3
         with:
