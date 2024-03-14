@@ -41,8 +41,8 @@ jobs:
 
       - name: Relative URLs
         run: |
-          sed -i -e 's/="\//="/g' html/*.html
-          sed -i -e 's/url(\//url(/g' html/assets/*.css
+          sed -i -e 's/="\/assets\//="assets\//g' html/*.html
+          sed -i -e 's/url(\/assets\//url(/g' html/assets/*.css
 
       - uses: actions/upload-pages-artifact@v3
         with:
