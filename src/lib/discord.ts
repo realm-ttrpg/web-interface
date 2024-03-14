@@ -1,7 +1,5 @@
 import Cookies from "js-cookie";
 
-const API_BASE = "https://discord.com/api/v10";
-
 export interface Thing {
 	id: number;
 }
@@ -48,7 +46,7 @@ export const getDiscordToken = () => {
 };
 
 const discordApi = async (token: string, url: string) =>
-	await fetch(`${API_BASE}${url}`, {
+	await fetch(`https://discord.com/api/v10${url}`, {
 		headers: { Authorization: `Bearer ${token}` },
 	});
 
