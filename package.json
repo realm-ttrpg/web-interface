@@ -12,6 +12,7 @@
 		"eslint": "^8.52.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-prettier": "^5.0.1",
+		"fontsource-shrikhand": "^4.0.0",
 		"gitmoji-cli": "^8.5.0",
 		"js-cookie": "^3.0.5",
 		"prettier": "^3.0.3",

@@ -1,4 +1,5 @@
 import "@haliphax/nubbins/dist/nubbins.min.css";
+import "fontsource-shrikhand/latin-ext.css";
 import { createApp } from "vue";
 import Wrapper from "./components/wrapper.vue";
 
