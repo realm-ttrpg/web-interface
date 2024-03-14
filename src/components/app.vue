@@ -31,10 +31,10 @@ const guilds = ref(
 		<p>
 			You are logged in as
 			<DiscordAvatar
-				class="di mr-xxs"
+				class="am di mr-xxs"
 				:user="user.id"
 				:avatar="user.avatar"
-				:size="24"
+				:size="32"
 			></DiscordAvatar>
 			<strong>{{ user.username }}</strong
 			>.
