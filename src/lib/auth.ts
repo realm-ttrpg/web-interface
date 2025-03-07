@@ -1,6 +1,5 @@
 import { User, getNewDiscordToken } from "./discord";
 
-// @ts-ignore
 const realmApi = import.meta.env.VITE_APP_REALM_API;
 
 export const getLoginToken = async (user: User, token: string) => {
@@ -16,6 +15,8 @@ export const getLoginToken = async (user: User, token: string) => {
 			.then((r) => r.json())
 			.then((d) => d.token);
 	} catch (ex) {
+		console.log("Exception; getting new token");
+		console.error(ex);
 		getNewDiscordToken();
 	}
 };

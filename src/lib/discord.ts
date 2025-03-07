@@ -1,6 +1,5 @@
 import Cookies from "js-cookie";
 
-// @ts-ignore
 const realmApi = import.meta.env.VITE_APP_REALM_API;
 
 export interface Thing {
@@ -17,7 +16,6 @@ export interface User extends NamedThing {
 }
 
 export const getNewDiscordToken = () => {
-	// @ts-ignore
 	const clientId = import.meta.env.VITE_APP_CLIENT_ID;
 	const oauthScope = ["identify", "guilds", "guilds.members.read"];
 	const redirectUri = window.location.href.replace(/[#?].*$/, "");

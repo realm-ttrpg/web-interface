@@ -7,4 +7,5 @@ try {
 	createApp(Wrapper).mount("#app");
 } catch (ex) {
 	document.getElementById("app")!.innerText = "Something went wrong.";
+	console.error(ex);
 }

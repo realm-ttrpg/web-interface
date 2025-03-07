@@ -1,5 +1,9 @@
 <script lang="ts" setup>
-defineProps(["avatar", "size", "user"]);
+defineProps({
+	avatar: { type: String, default: "" },
+	size: { type: Number, default: 0 },
+	user: { type: String, default: "" },
+});
 </script>
 
 <template>
