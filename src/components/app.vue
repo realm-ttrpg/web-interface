@@ -5,6 +5,7 @@ import {
 	getDiscordGuilds,
 	getDiscordToken,
 	getDiscordUser,
+	getSharedGuilds,
 } from "../lib/discord";
 import DiscordAvatar from "./discord-avatar.vue";
 
@@ -22,7 +23,11 @@ const guilds = ref(
 	(await getDiscordGuilds(token)).sort((a, b) => a.name.localeCompare(b.name)),
 );
 
-// TODO use login token to filter list of guilds to those shared w/ bot
+// filter to guilds shared with the bot
+const sharedGuilds = await getSharedGuilds(guilds.value.map((g) => g.id));
+const filteredGuilds = guilds.value.filter((g) =>
+	sharedGuilds.includes(parseInt(g.id)),
+);
 </script>
 
 <template>
@@ -40,7 +45,7 @@ const guilds = ref(
 			>.
 		</p>
 		<select>
-			<option v-for="guild of guilds" :key="id" :value="guild.id">
+			<option v-for="guild of filteredGuilds" :key="guild.id" :value="guild.id">
 				{{ guild.name }}
 			</option>
 		</select>
