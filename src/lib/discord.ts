@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 const realmApi = import.meta.env.VITE_APP_REALM_API;
 
 export interface Thing {
-	id: number;
+	id: string;
 }
 
 export interface NamedThing extends Thing {
@@ -61,7 +61,7 @@ export const getDiscordGuilds = async (
 ): Promise<Array<NamedThing>> =>
 	await discordApi(token, "/users/@me/guilds").then((r) => r.json());
 
-export const getSharedGuilds = async (guild_ids: number[]) =>
+export const getSharedGuilds = async (guild_ids: string[]) =>
 	await fetch(`${realmApi}/auth/shared-guilds`, {
 		body: JSON.stringify({ guild_ids }),
 		headers: { "Content-Type": "application/json" },

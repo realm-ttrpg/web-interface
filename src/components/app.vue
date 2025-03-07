@@ -25,9 +25,7 @@ const guilds = ref(
 
 // filter to guilds shared with the bot
 const sharedGuilds = await getSharedGuilds(guilds.value.map((g) => g.id));
-const filteredGuilds = guilds.value.filter((g) =>
-	sharedGuilds.includes(parseInt(g.id)),
-);
+const filteredGuilds = guilds.value.filter((g) => sharedGuilds.includes(g.id));
 </script>
 
 <template>
