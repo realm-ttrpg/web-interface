@@ -11,10 +11,16 @@ First, make a `src/.env` file from the provided `src/.env.example` file,
 replacing the placeholder values with your own Discord client ID and Realm API
 server address.
 
-Then, build the static site:
+Using NodeJS 22 (or greater), install the project dependencies:
 
 ```shell
 npm login --scope @haliphax  # password is your GitHub auth token
+npm ci
+```
+
+Then, build the static site:
+
+```shell
 npm run build
 ```
 
