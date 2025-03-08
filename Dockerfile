@@ -1,3 +1,6 @@
+# requires your .npmrc file with GitHub login info
+# example: docker build -t rpgweb:latest --secret id=npmrc,src=$HOME/.npmrc .
+
 FROM node:22 AS build
 WORKDIR /build
 COPY package.json /build/
