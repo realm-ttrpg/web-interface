@@ -14,14 +14,15 @@ server address.
 Using NodeJS 22 (or greater), install the project dependencies:
 
 ```shell
-npm login --scope @haliphax  # password is your GitHub auth token
+# password is your GitHub auth token
+npm login --registry http://npm.pkg.github.com
 npm ci
 ```
 
 Then, build the static site:
 
 ```shell
-npm run build
+npm run build:local
 ```
 
 ## Running
