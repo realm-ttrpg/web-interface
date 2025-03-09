@@ -11,11 +11,13 @@ First, make a `src/.env` file from the provided `src/.env.example` file,
 replacing the placeholder values with your own Discord client ID and Realm API
 server address.
 
+You will need a `$HOME/.npmrc` file with credentials for `npm.pkg.githb.com` to
+install some of the dependencies. (See:
+[Authenticating with a personal access token][])
+
 Using NodeJS 22 (or greater), install the project dependencies:
 
 ```shell
-# password is your GitHub auth token
-npm login --registry http://npm.pkg.github.com
 npm ci
 ```
 
@@ -35,5 +37,6 @@ npm run dev
 ```
 
 [api server]: https://github.com/realm-ttrpg/api-server
+[authenticating with a personal access token]: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token
 [bot software]: https://github.com/realm-ttrpg/discord-bot
 [tabletop roleplaying games]: https://en.wikipedia.org/wiki/Tabletop_role-playing_game
