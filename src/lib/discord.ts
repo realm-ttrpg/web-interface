@@ -15,7 +15,7 @@ export interface User extends NamedThing {
 
 export default class DiscordClient {
 	private readonly clientId: string = import.meta.env.VITE_APP_CLIENT_ID;
-	private readonly token: string;
+	readonly token: string;
 
 	constructor() {
 		const urlMatch = /\baccess_token=([^&]+)/i.exec(window.location.hash);
