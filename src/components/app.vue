@@ -1,30 +1,27 @@
 <script lang="ts" setup>
 import { ref } from "vue";
-import { getLoginToken } from "../lib/auth";
-import {
-	getDiscordGuilds,
-	getDiscordToken,
-	getDiscordUser,
-	getSharedGuilds,
-} from "../lib/discord";
+import DiscordClient from "../lib/discord";
+import RealmClient from "../lib/realm";
 import DiscordAvatar from "./discord-avatar.vue";
 
 // make sure we're logged into discord
-const token = getDiscordToken();
+const discord = new DiscordClient();
 
 // get discord user info
-const user = ref(await getDiscordUser(token));
+const user = ref(await discord.getDiscordUser());
 
 // log into realm
-getLoginToken(user.value, token);
+const realm = await RealmClient.create(user.value, discord.token);
 
 // get list of guilds user is in
 const guilds = ref(
-	(await getDiscordGuilds(token)).sort((a, b) => a.name.localeCompare(b.name)),
+	(await discord.getDiscordGuilds()).sort((a, b) =>
+		a.name.localeCompare(b.name),
+	),
 );
 
 // filter to guilds shared with the bot
-const sharedGuilds = await getSharedGuilds(guilds.value.map((g) => g.id));
+const sharedGuilds = await realm.getSharedGuilds(guilds.value.map((g) => g.id));
 const filteredGuilds = guilds.value.filter((g) => sharedGuilds.includes(g.id));
 </script>
 

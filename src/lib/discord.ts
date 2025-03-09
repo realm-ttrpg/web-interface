@@ -1,7 +1,5 @@
 import Cookies from "js-cookie";
 
-const realmApi = import.meta.env.VITE_APP_REALM_API;
-
 export interface Thing {
 	id: string;
 }
@@ -15,57 +13,48 @@ export interface User extends NamedThing {
 	username: string;
 }
 
-export const getNewDiscordToken = () => {
-	const clientId = import.meta.env.VITE_APP_CLIENT_ID;
-	const oauthScope = ["identify", "guilds", "guilds.members.read"];
-	const redirectUri = window.location.href.replace(/[#?].*$/, "");
+export default class DiscordClient {
+	private readonly clientId: string = import.meta.env.VITE_APP_CLIENT_ID;
+	private readonly token: string;
 
-	Cookies.remove("token");
-	window.location.assign(
-		`https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${oauthScope.join("+")}`,
-	);
+	constructor() {
+		const urlMatch = /\baccess_token=([^&]+)/i.exec(window.location.hash);
+		const urlToken = urlMatch ? urlMatch[1] : null;
 
-	throw "Retrieving auth token";
-};
+		if (urlToken) {
+			Cookies.set("token", urlToken, { expires: 30, sameSite: "strict" });
+		}
 
-export const getDiscordToken = () => {
-	const urlMatch = /\baccess_token=([^&]+)/i.exec(window.location.hash);
-	const urlToken = urlMatch ? urlMatch[1] : null;
+		const token = urlToken ?? Cookies.get("token");
 
-	if (urlToken) {
-		Cookies.set("token", urlToken, { expires: 30, sameSite: "strict" });
+		if (!token) {
+			const oauthScope = ["identify", "guilds", "guilds.members.read"];
+			const redirectUri = window.location.href.replace(/[#?].*$/, "");
+
+			Cookies.remove("token");
+			window.location.assign(
+				`https://discord.com/oauth2/authorize?client_id=${this.clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${oauthScope.join("+")}`,
+			);
+
+			throw "Retrieving auth token";
+		}
+
+		this.token = token;
 	}
 
-	const token = urlToken ?? Cookies.get("token");
-
-	if (!token) {
-		getNewDiscordToken();
-		return "";
+	async discordApi(url: string): Promise<Response> {
+		return await fetch(`https://discord.com/api/v10${url}`, {
+			headers: { Authorization: `Bearer ${this.token}` },
+		});
 	}
 
-	return token;
-};
+	async getDiscordUser(): Promise<User> {
+		return await this.discordApi("/oauth2/@me")
+			.then((r) => r.json())
+			.then((d) => d.user);
+	}
 
-const discordApi = async (token: string, url: string) =>
-	await fetch(`https://discord.com/api/v10${url}`, {
-		headers: { Authorization: `Bearer ${token}` },
-	});
-
-export const getDiscordUser = async (token: string): Promise<User> =>
-	await discordApi(token, "/oauth2/@me")
-		.then((r) => r.json())
-		.then((d) => d.user);
-
-export const getDiscordGuilds = async (
-	token: string,
-): Promise<Array<NamedThing>> =>
-	await discordApi(token, "/users/@me/guilds").then((r) => r.json());
-
-export const getSharedGuilds = async (guild_ids: string[]) =>
-	await fetch(`${realmApi}/auth/shared-guilds`, {
-		body: JSON.stringify({ guild_ids }),
-		headers: { "Content-Type": "application/json" },
-		method: "POST",
-	})
-		.then((r) => r.json())
-		.then((d) => d.guild_ids);
+	async getDiscordGuilds(): Promise<Array<NamedThing>> {
+		return await this.discordApi("/users/@me/guilds").then((r) => r.json());
+	}
+}
