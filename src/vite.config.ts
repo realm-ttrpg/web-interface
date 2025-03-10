@@ -14,6 +14,11 @@ export default defineConfig({
 		target: "esnext",
 	},
 	plugins: [vue()],
+	resolve: {
+		alias: {
+			"@": resolve(__dirname, "app"),
+		},
+	},
 	server: {
 		cors: true,
 	},

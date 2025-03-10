@@ -6,6 +6,9 @@
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"lib": ["ES6", "DOM", "DOM.Iterable"],
+		"paths": {
+			"@/*": ["./src/app/*"]
+		},
 		"module": "ESNext",
 		"moduleResolution": "Node",
 		"noEmit": true,

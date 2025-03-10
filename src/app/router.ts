@@ -1,12 +1,11 @@
-import { createRouter, createWebHistory } from "vue-router";
-import { ROOT_URI } from "./constants";
+import { createRouter, createWebHashHistory } from "vue-router";
 import Main from "./views/main.vue";
 
 const router = createRouter({
-	history: createWebHistory(),
+	history: createWebHashHistory(),
 	routes: [
 		{
-			path: ROOT_URI,
+			path: "/",
 			component: Main,
 			name: "main",
 		},

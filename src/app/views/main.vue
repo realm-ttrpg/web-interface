@@ -1,7 +1,8 @@
 <script lang="ts" setup>
+import DiscordAvatar from "@/components/discord-avatar.vue";
+import DiscordClient from "@/lib/discord";
+import RealmClient from "@/lib/realm";
 import { ref } from "vue";
-import DiscordClient from "../lib/discord";
-import RealmClient from "../lib/realm";
 
 // make sure we're logged into discord
 const discord = new DiscordClient();
