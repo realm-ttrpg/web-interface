@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import Logout from "./views/logout.vue";
 import Main from "./views/main.vue";
 
 const router = createRouter({
@@ -8,6 +9,11 @@ const router = createRouter({
 			path: "/",
 			component: Main,
 			name: "main",
+		},
+		{
+			path: "/logout",
+			component: Logout,
+			name: "logout",
 		},
 	],
 });

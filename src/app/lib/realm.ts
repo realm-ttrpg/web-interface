@@ -5,7 +5,7 @@ const realmApi = import.meta.env.VITE_APP_REALM_API;
 
 /** Realm REST API client */
 export default class RealmClient {
-	private readonly token: string;
+	private token: string;
 	private readonly user_id: string;
 
 	constructor(user: User, token: string) {
@@ -73,5 +73,10 @@ export default class RealmClient {
 		})
 			.then((r) => r.json())
 			.then((d) => d.guild_ids);
+	}
+
+	async logout() {
+		await this.realmApi("/auth/logout", { method: "POST" });
+		this.token = "";
 	}
 }

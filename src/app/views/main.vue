@@ -26,9 +26,14 @@ const filteredGuilds = guilds.filter((g) => sharedGuilds.includes(g.id));
 		<strong>{{ user.username }}</strong
 		>.
 	</p>
-	<select>
-		<option v-for="guild of filteredGuilds" :key="guild.id" :value="guild.id">
-			{{ guild.name }}
-		</option>
-	</select>
+	<p>
+		<router-link :to="{ name: 'logout' }">Log out</router-link>
+	</p>
+	<p>
+		<select>
+			<option v-for="guild of filteredGuilds" :key="guild.id" :value="guild.id">
+				{{ guild.name }}
+			</option>
+		</select>
+	</p>
 </template>
