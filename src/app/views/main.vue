@@ -14,15 +14,13 @@ const user = ref(await discord.getDiscordUser());
 const realm = await RealmClient.create(user.value, discord.token);
 
 // get list of guilds user is in
-const guilds = ref(
-	(await discord.getDiscordGuilds()).sort((a, b) =>
-		a.name.localeCompare(b.name),
-	),
+const guilds = (await discord.getDiscordGuilds()).sort((a, b) =>
+	a.name.localeCompare(b.name),
 );
 
 // filter to guilds shared with the bot
-const sharedGuilds = await realm.getSharedGuilds(guilds.value.map((g) => g.id));
-const filteredGuilds = guilds.value.filter((g) => sharedGuilds.includes(g.id));
+const sharedGuilds = await realm.getSharedGuilds(guilds.map((g) => g.id));
+const filteredGuilds = guilds.filter((g) => sharedGuilds.includes(g.id));
 </script>
 
 <template>
