@@ -2,6 +2,7 @@
 import DiscordClient from "@/lib/discord";
 import RealmClient from "@/lib/realm";
 import { provide } from "vue";
+import GlobalMenu from "./components/global-menu.vue";
 
 // make sure we're logged into discord
 const discord = new DiscordClient();
@@ -19,6 +20,8 @@ provide("user", user);
 
 <template>
 	<div class="c">
+		<GlobalMenu></GlobalMenu>
+		<a name="main"></a>
 		<router-view></router-view>
 	</div>
 </template>

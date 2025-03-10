@@ -16,7 +16,4 @@ Cookies.remove("realmToken");
 <template>
 	<h1>Logged out</h1>
 	<p>You have been logged out.</p>
-	<p>
-		<router-link :to="{ name: 'main' }">Log back in</router-link>
-	</p>
 </template>
