@@ -21,23 +21,29 @@ export default class DiscordClient {
 	constructor() {
 		const urlMatch = /\baccess_token=([^&]+)/i.exec(window.location.hash);
 		const urlToken = urlMatch ? urlMatch[1] : null;
+		const redirectUri = window.location.href.replace(/[#?].*$/, "");
 
 		if (urlToken) {
-			Cookies.set("token", urlToken, { expires: 30, sameSite: "strict" });
+			Cookies.set("discordToken", urlToken, {
+				expires: 30,
+				sameSite: "strict",
+			});
+			window.location.assign(redirectUri);
+
+			throw "Reloading page to use Discord token from URL";
 		}
 
-		const token = Cookies.get("token");
+		const token = Cookies.get("discordToken");
 
 		if (!token) {
 			const oauthScope = ["identify", "guilds", "guilds.members.read"];
-			const redirectUri = window.location.href.replace(/[#?].*$/, "");
 
-			Cookies.remove("token");
+			Cookies.remove("discordToken");
 			window.location.assign(
 				`https://discord.com/oauth2/authorize?client_id=${this.clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${oauthScope.join("+")}`,
 			);
 
-			throw "Retrieving auth token";
+			throw "Retrieving Discord token";
 		}
 
 		this.token = token;
@@ -46,6 +52,16 @@ export default class DiscordClient {
 	async discordApi(url: string): Promise<Response> {
 		return await fetch(`https://discord.com/api/v10${url}`, {
 			headers: { Authorization: `Bearer ${this.token}` },
+		}).then((r) => {
+			if (r.status >= 400) {
+				Cookies.remove("discordToken");
+				console.error(r);
+				window.location.reload();
+
+				throw "Error contacting Discord API";
+			}
+
+			return r;
 		});
 	}
 
