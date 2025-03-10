@@ -26,7 +26,7 @@ export default class DiscordClient {
 			Cookies.set("token", urlToken, { expires: 30, sameSite: "strict" });
 		}
 
-		const token = urlToken ?? Cookies.get("token");
+		const token = Cookies.get("token");
 
 		if (!token) {
 			const oauthScope = ["identify", "guilds", "guilds.members.read"];
