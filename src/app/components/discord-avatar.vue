@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-defineProps({
-	avatar: { type: String, default: "" },
-	size: { type: Number, default: 0 },
-	user: { type: String, default: "" },
-});
+import { User } from "@/lib/discord";
+
+defineProps<{
+	user: User;
+	size: number;
+}>();
 </script>
 
 <template>
 	<img
 		:height="size"
-		:src="`https://cdn.discordapp.com/avatars/${user}/${avatar}.jpg?size=${size}`"
+		:src="`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.jpg?size=${size}`"
 		:width="size"
 	/>
 </template>

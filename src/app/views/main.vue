@@ -27,12 +27,7 @@ const filteredGuilds = guilds.filter((g) => sharedGuilds.includes(g.id));
 	<h1>Realm TTRPG</h1>
 	<p>
 		You are logged in as
-		<DiscordAvatar
-			class="am di mr-xxs"
-			:user="user.id"
-			:avatar="user.avatar"
-			:size="32"
-		></DiscordAvatar>
+		<DiscordAvatar class="am di mr-xxs" :user="user" :size="32"></DiscordAvatar>
 		<strong>{{ user.username }}</strong
 		>.
 	</p>
