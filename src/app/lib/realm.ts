@@ -2,6 +2,7 @@ import { User } from "./discord";
 
 const realmApi = import.meta.env.VITE_APP_REALM_API;
 
+/** Realm REST API client */
 export default class RealmClient {
 	private readonly token: string;
 	private readonly user_id: string;

@@ -13,6 +13,7 @@ export interface User extends NamedThing {
 	username: string;
 }
 
+/** Discord REST API client */
 export default class DiscordClient {
 	private readonly clientId: string = import.meta.env.VITE_APP_CLIENT_ID;
 	readonly token: string;
