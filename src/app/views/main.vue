@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import DiscordClient from "../lib/discord";
 import RealmClient from "../lib/realm";
-import DiscordAvatar from "./discord-avatar.vue";
 
 // make sure we're logged into discord
 const discord = new DiscordClient();
@@ -26,23 +25,21 @@ const filteredGuilds = guilds.value.filter((g) => sharedGuilds.includes(g.id));
 </script>
 
 <template>
-	<div class="c">
-		<h1>Realm TTRPG</h1>
-		<p>
-			You are logged in as
-			<DiscordAvatar
-				class="am di mr-xxs"
-				:user="user.id"
-				:avatar="user.avatar"
-				:size="32"
-			></DiscordAvatar>
-			<strong>{{ user.username }}</strong
-			>.
-		</p>
-		<select>
-			<option v-for="guild of filteredGuilds" :key="guild.id" :value="guild.id">
-				{{ guild.name }}
-			</option>
-		</select>
-	</div>
+	<h1>Realm TTRPG</h1>
+	<p>
+		You are logged in as
+		<DiscordAvatar
+			class="am di mr-xxs"
+			:user="user.id"
+			:avatar="user.avatar"
+			:size="32"
+		></DiscordAvatar>
+		<strong>{{ user.username }}</strong
+		>.
+	</p>
+	<select>
+		<option v-for="guild of filteredGuilds" :key="guild.id" :value="guild.id">
+			{{ guild.name }}
+		</option>
+	</select>
 </template>

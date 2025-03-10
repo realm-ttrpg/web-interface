@@ -1,10 +1,13 @@
 import "@fontsource/shrikhand";
 import "@haliphax/nubbins/dist/nubbins.min.css";
 import { createApp } from "vue";
-import Wrapper from "./components/wrapper.vue";
+import router from "./router";
+import Wrapper from "./wrapper.vue";
 
 try {
-	createApp(Wrapper).mount("#app");
+	const app = createApp(Wrapper);
+	app.use(router);
+	app.mount("#app");
 } catch (ex) {
 	document.getElementById("app")!.innerText = "Something went wrong.";
 	console.error(ex);
