@@ -1,17 +1,12 @@
 <script lang="ts" setup>
 import DiscordAvatar from "@/components/discord-avatar.vue";
-import DiscordClient from "@/lib/discord";
+import DiscordClient, { User } from "@/lib/discord";
 import RealmClient from "@/lib/realm";
-import { ref } from "vue";
+import { inject, Ref, ref } from "vue";
 
-// make sure we're logged into discord
-const discord = new DiscordClient();
-
-// get discord user info
-const user = ref(await discord.getDiscordUser());
-
-// log into realm
-const realm = await RealmClient.create(user.value, discord.token);
+const discord: DiscordClient = inject("discordClient")!;
+const realm: RealmClient = inject("realmClient")!;
+const user: Ref<User> = ref(inject("user")!);
 
 // get list of guilds user is in
 const guilds = (await discord.getDiscordGuilds()).sort((a, b) =>
