@@ -1,3 +1,4 @@
+import { loading } from "@/lib/global";
 import { createRouter, createWebHashHistory } from "vue-router";
 import Logout from "./views/logout.vue";
 import Main from "./views/main.vue";
@@ -17,5 +18,7 @@ const router = createRouter({
 		},
 	],
 });
+
+router.beforeEach(() => loading());
 
 export default router;

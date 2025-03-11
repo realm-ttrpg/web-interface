@@ -21,6 +21,7 @@ provide("user", user);
 <template>
 	<div class="c">
 		<GlobalMenu></GlobalMenu>
+		<p id="loading">⏳ Loading...</p>
 		<a name="main"></a>
 		<router-view></router-view>
 	</div>

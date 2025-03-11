@@ -16,14 +16,20 @@ onMounted(() => {
 
 <template>
 	<nav>
-		<ul ref="items" class="menu-items">
-			<li>
-				<router-link :to="{ name: 'main' }">Main</router-link>
-			</li>
-			<li v-if="router.currentRoute.value.name != 'logout'">
-				<router-link :to="{ name: 'logout' }">Logout</router-link>
-			</li>
-		</ul>
+		<details ref="details">
+			<summary>Menu</summary>
+			<ul ref="items" class="menu-items">
+				<li>
+					<router-link :to="{ name: 'main' }">Main</router-link>
+				</li>
+				<li>
+					<router-link :to="{ name: 'test' }">Test page</router-link>
+				</li>
+				<li v-if="router.currentRoute.value.name != 'logout'">
+					<router-link :to="{ name: 'logout' }">Logout</router-link>
+				</li>
+			</ul>
+		</details>
 	</nav>
 </template>
 
@@ -36,15 +42,17 @@ ul.menu-items {
 	list-style: none;
 	margin: 0;
 	padding-left: 0;
-}
 
-ul.menu-items > li {
-	display: inline-block;
-	margin-right: var(--space-m);
-}
+	& > li {
+		display: inline-block;
 
-ul.menu-items a.router-link-active {
-	font-weight: bolder;
-	text-decoration: none;
+		&:not(:last-child) {
+			margin-right: var(--space-l);
+		}
+	}
+
+	& a.router-link-active:not(:hover) {
+		color: var(--color-pri-2);
+	}
 }
 </style>

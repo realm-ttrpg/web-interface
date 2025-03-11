@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import DiscordAvatar from "@/components/discord-avatar.vue";
 import DiscordClient, { User } from "@/lib/discord";
+import { doneLoading } from "@/lib/global";
 import RealmClient from "@/lib/realm";
-import { inject } from "vue";
+import { inject, onMounted } from "vue";
 
 const discord: DiscordClient = inject("discordClient")!;
 const realm: RealmClient = inject("realmClient")!;
@@ -16,6 +17,8 @@ const guilds = (await discord.getDiscordGuilds()).sort((a, b) =>
 // filter to guilds shared with the bot
 const sharedGuilds = await realm.getSharedGuilds(guilds.map((g) => g.id));
 const filteredGuilds = guilds.filter((g) => sharedGuilds.includes(g.id));
+
+onMounted(() => doneLoading());
 </script>
 
 <template>
