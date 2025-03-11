@@ -2,11 +2,11 @@
 import DiscordAvatar from "@/components/discord-avatar.vue";
 import DiscordClient, { User } from "@/lib/discord";
 import RealmClient from "@/lib/realm";
-import { inject, Ref, ref } from "vue";
+import { inject } from "vue";
 
 const discord: DiscordClient = inject("discordClient")!;
 const realm: RealmClient = inject("realmClient")!;
-const user: Ref<User> = ref(inject("user")!);
+const user: User = inject("user")!;
 
 // get list of guilds user is in
 const guilds = (await discord.getDiscordGuilds()).sort((a, b) =>
