@@ -22,9 +22,6 @@ onMounted(() => {
 				<li>
 					<router-link :to="{ name: 'main' }">Main</router-link>
 				</li>
-				<li>
-					<router-link :to="{ name: 'test' }">Test page</router-link>
-				</li>
 				<li v-if="router.currentRoute.value.name != 'logout'">
 					<router-link :to="{ name: 'logout' }">Logout</router-link>
 				</li>
