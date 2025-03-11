@@ -1,4 +1,4 @@
-import "@fontsource/shrikhand";
+import "@fontsource/shrikhand/latin.css";
 import "@haliphax/nubbins/dist/nubbins.min.css";
 import { createApp } from "vue";
 import router from "./router";
