@@ -44,6 +44,9 @@ jobs:
           sed -i -e 's/="\/assets\//="assets\//g' html/*.html
           sed -i -e 's/url(\/assets\//url(/g' html/assets/*.css
 
+      - name: CNAME
+        run: echo "realmttrpg.com" > html/CNAME
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: html/
