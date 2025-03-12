@@ -16,6 +16,7 @@ export default tseslint.config(
 		},
 		languageOptions: {
 			globals: {
+				console: true,
 				document: true,
 			},
 			parserOptions: {
