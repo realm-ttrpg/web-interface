@@ -47,6 +47,7 @@ export default class RealmClient {
 
 	async realmApi(url: string, opts: Partial<RequestInit>): Promise<Response> {
 		return await fetch(`${realmApi}${url}`, {
+			credentials: "omit",
 			...opts,
 			headers: {
 				...opts.headers,
