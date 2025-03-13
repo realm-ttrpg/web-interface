@@ -26,10 +26,8 @@ export default class RealmClient {
 				method: "POST",
 			})
 				.then((r) => {
-					if (r.status >= 300) {
-						console.error(r);
+					if (r.status !== 200) {
 						alert("Error logging into Realm");
-
 						throw "Error logging into Realm";
 					}
 
@@ -45,35 +43,37 @@ export default class RealmClient {
 		return new RealmClient(user, realmToken!);
 	}
 
-	async realmApi(url: string, opts: Partial<RequestInit>): Promise<Response> {
+	async realmApi(url: string, opts?: Partial<RequestInit>): Promise<Response> {
 		return await fetch(`${realmApi}${url}`, {
 			credentials: "omit",
 			...opts,
 			headers: {
-				...opts.headers,
+				...opts?.headers,
 				"Content-Type": "application/json",
 				"X-Realm-User": this.user_id,
 				"X-Realm-Token": this.token,
 			},
 		}).then((r) => {
-			if (r.status >= 300) {
+			if (r.status === 429) {
+				alert("Too many requests. Slow down.");
+				throw "Too many requests";
+			} else if (r.status >= 400 && r.status < 500) {
 				Cookies.remove("realmToken");
-				window.location.reload();
-
+				window.location.assign(window.location.href);
 				throw "Realm API error; reloading page";
+			} else if (r.status >= 500) {
+				alert("Error contacting Realm API");
+				throw "Error contacting Realm API";
 			}
 
 			return r;
 		});
 	}
 
-	async getSharedGuilds(guild_ids: string[]) {
-		return await this.realmApi("/auth/shared-guilds", {
-			body: JSON.stringify({ guild_ids }),
-			method: "POST",
-		})
+	async getSharedGuilds() {
+		return await this.realmApi("/auth/shared-guilds")
 			.then((r) => r.json())
-			.then((d) => d.guild_ids);
+			.then((d) => d.guilds);
 	}
 
 	async logout() {

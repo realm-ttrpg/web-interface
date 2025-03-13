@@ -1,22 +1,15 @@
 <script lang="ts" setup>
 import DiscordAvatar from "@/components/discord-avatar.vue";
-import DiscordClient, { User } from "@/lib/discord";
+import { User } from "@/lib/discord";
 import { doneLoading } from "@/lib/global";
 import RealmClient from "@/lib/realm";
 import { inject, onMounted } from "vue";
 
-const discord: DiscordClient = inject("discordClient")!;
 const realm: RealmClient = inject("realmClient")!;
-const user: User = inject("user")!;
-
-// get list of guilds user is in
-const guilds = (await discord.getDiscordGuilds()).sort((a, b) =>
-	a.name.localeCompare(b.name),
-);
+const user: User = inject("user");
 
 // filter to guilds shared with the bot
-const sharedGuilds = await realm.getSharedGuilds(guilds.map((g) => g.id));
-const filteredGuilds = guilds.filter((g) => sharedGuilds.includes(g.id));
+const sharedGuilds = await realm.getSharedGuilds();
 
 onMounted(() => doneLoading());
 </script>
@@ -31,7 +24,7 @@ onMounted(() => doneLoading());
 	</p>
 	<p>
 		<select>
-			<option v-for="guild of filteredGuilds" :key="guild.id" :value="guild.id">
+			<option v-for="guild of sharedGuilds" :key="guild.id" :value="guild.id">
 				{{ guild.name }}
 			</option>
 		</select>

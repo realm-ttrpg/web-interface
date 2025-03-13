@@ -53,11 +53,17 @@ export default class DiscordClient {
 		return await fetch(`https://discord.com/api/v10${url}`, {
 			headers: { Authorization: `Bearer ${this.token}` },
 		}).then((r) => {
-			if (r.status >= 400) {
+			if (r.status === 429) {
+				alert("Too many requests. Slow down.");
+				throw "Too many requests";
+			} else if (r.status >= 400 && r.status < 500) {
 				Cookies.remove("discordToken");
 				console.error(r);
-				window.location.reload();
-
+				window.location.assign(window.location.href);
+				throw "Discord API error; reloading page";
+			} else if (r.status >= 500) {
+				Cookies.remove("discordToken");
+				alert("Error contacting Discord API");
 				throw "Error contacting Discord API";
 			}
 
@@ -69,9 +75,5 @@ export default class DiscordClient {
 		return await this.discordApi("/oauth2/@me")
 			.then((r) => r.json())
 			.then((d) => d.user);
-	}
-
-	async getDiscordGuilds(): Promise<Array<NamedThing>> {
-		return await this.discordApi("/users/@me/guilds").then((r) => r.json());
 	}
 }
