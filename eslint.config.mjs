@@ -18,6 +18,7 @@ export default tseslint.config(
 			globals: {
 				console: true,
 				document: true,
+				localStorage: true,
 			},
 			parserOptions: {
 				parser: tseslint.parser,
