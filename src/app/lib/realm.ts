@@ -80,5 +80,6 @@ export default class RealmClient {
 	async logout() {
 		await this.realmApi("/auth/logout", { method: "POST" });
 		this.token = "";
+		Cookies.remove("realmToken");
 	}
 }

@@ -2,16 +2,13 @@
 import DiscordClient from "@/lib/discord";
 import { doneLoading } from "@/lib/global";
 import RealmClient from "@/lib/realm";
-import Cookies from "js-cookie";
 import { inject, onMounted } from "vue";
 
 const discord: DiscordClient = inject("discordClient")!;
 const realm: RealmClient = inject("realmClient")!;
 
 await realm.logout();
-discord.token = "";
-Cookies.remove("discordToken");
-Cookies.remove("realmToken");
+await discord.logout();
 
 onMounted(() => doneLoading());
 </script>

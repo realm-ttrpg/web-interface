@@ -72,6 +72,11 @@ export default class DiscordClient {
 		});
 	}
 
+	async logout() {
+		this.token = "";
+		Cookies.remove("discordToken");
+	}
+
 	async getDiscordUser(): Promise<User> {
 		return await this.discordApi("/oauth2/@me")
 			.then((r) => r.json())
