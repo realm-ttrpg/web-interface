@@ -63,7 +63,6 @@ export default class DiscordClient {
 				window.location.reload();
 				throw "Discord API error; reloading page";
 			} else if (r.status >= 500) {
-				Cookies.remove("discordToken");
 				alert("Error contacting Discord API");
 				throw "Error contacting Discord API";
 			}
