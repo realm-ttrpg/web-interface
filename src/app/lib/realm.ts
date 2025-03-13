@@ -60,7 +60,7 @@ export default class RealmClient {
 				throw "Too many requests";
 			} else if (r.status >= 400 && r.status < 500) {
 				Cookies.remove("realmToken");
-				window.location.assign(window.location.href);
+				window.location.reload();
 				throw "Realm API error; reloading page";
 			} else if (r.status >= 500) {
 				alert("Error contacting Realm API");

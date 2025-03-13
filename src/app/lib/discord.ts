@@ -60,7 +60,7 @@ export default class DiscordClient {
 			} else if (r.status >= 400 && r.status < 500) {
 				Cookies.remove("discordToken");
 				console.error(r);
-				window.location.assign(window.location.href);
+				window.location.reload();
 				throw "Discord API error; reloading page";
 			} else if (r.status >= 500) {
 				Cookies.remove("discordToken");
