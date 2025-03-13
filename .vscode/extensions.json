@@ -1,3 +1,11 @@
 {
-	"recommendations": ["editorconfig.editorconfig", "esbenp.prettier-vscode"]
+	"recommendations": [
+		"editorconfig.editorconfig",
+		"esbenp.prettier-vscode",
+		"dbaeumer.vscode-eslint",
+		"seatonjiang.gitmoji-vscode",
+		"redhat.vscode-yaml",
+		"formulahendry.auto-close-tag",
+		"vue.volar"
+	]
 }
