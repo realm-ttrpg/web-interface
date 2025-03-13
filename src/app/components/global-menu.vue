@@ -1,16 +1,10 @@
 <script lang="ts" setup>
 import router from "@/router";
-import { onMounted, Ref, ref } from "vue";
+import { Ref, ref } from "vue";
 
 const details: Ref<HTMLDetailsElement | undefined> = ref();
-const items: Ref<HTMLUListElement | undefined> = ref();
-
-onMounted(() => {
-	items
-		.value!.querySelectorAll("a")
-		.forEach((v) =>
-			v.addEventListener("click", () => (details.value!.open = false)),
-		);
+router.beforeEach(() => {
+	details.value!.open = false;
 });
 </script>
 
@@ -18,7 +12,7 @@ onMounted(() => {
 	<nav>
 		<details ref="details">
 			<summary>Menu</summary>
-			<ul ref="items" class="menu-items">
+			<ul class="menu-items">
 				<li>
 					<router-link :to="{ name: 'main' }">Main</router-link>
 				</li>
