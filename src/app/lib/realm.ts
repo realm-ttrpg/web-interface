@@ -37,6 +37,7 @@ export default class RealmClient {
 			Cookies.set("realmToken", realmToken!, {
 				expires: 30,
 				sameSite: "strict",
+				secure: true,
 			});
 		}
 

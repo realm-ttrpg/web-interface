@@ -27,6 +27,7 @@ export default class DiscordClient {
 			Cookies.set("discordToken", urlToken, {
 				expires: 30,
 				sameSite: "strict",
+				secure: true,
 			});
 			window.location.assign(redirectUri);
 
