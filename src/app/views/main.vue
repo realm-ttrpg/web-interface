@@ -6,8 +6,7 @@ import { inject, onMounted } from "vue";
 
 const realm: RealmClient = inject("realmClient")!;
 const sharedGuilds = await realm.getSharedGuilds();
-
-onMounted(() => doneLoading());
+onMounted(doneLoading);
 </script>
 
 <template>

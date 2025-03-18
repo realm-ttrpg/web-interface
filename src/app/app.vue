@@ -4,10 +4,7 @@ import GlobalMenu from "./components/global-menu.vue";
 import RealmClient from "./lib/realm";
 
 provide("realmClient", await RealmClient.create());
-
-onMounted(() => {
-	document.getElementById("apploading")!.remove();
-});
+onMounted(() => document.getElementById("apploading")!.remove());
 </script>
 
 <template>

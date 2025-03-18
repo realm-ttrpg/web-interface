@@ -5,8 +5,7 @@ import { inject, onMounted } from "vue";
 
 const realm: RealmClient = inject("realmClient")!;
 await realm.logout();
-
-onMounted(() => doneLoading());
+onMounted(doneLoading);
 </script>
 
 <template>
