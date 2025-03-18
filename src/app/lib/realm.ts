@@ -1,7 +1,9 @@
 import lscache from "lscache";
-import DiscordClient from "./discord";
+import DiscordClient, { NamedThing } from "./discord";
 
-const realmApi = import.meta.env.VITE_APP_REALM_API;
+const REALM_API = import.meta.env.VITE_APP_REALM_API;
+const RESPONSE_CACHE_MINUTES = 30;
+const USER_CACHE_MINUTES = 480; // 6 hours
 
 export type RealmUser = {
 	id: string;
@@ -27,7 +29,7 @@ export default class RealmClient {
 			const discord = new DiscordClient();
 			const user = await discord.getDiscordUser();
 
-			const loginResponse = await fetch(`${realmApi}/auth/login`, {
+			const loginResponse = await fetch(`${REALM_API}/auth/login`, {
 				body: JSON.stringify({
 					token: discord.token,
 					user_id: user.id,
@@ -48,8 +50,8 @@ export default class RealmClient {
 				name: loginResponse.user.name,
 				avatar: loginResponse.user.avatar,
 			};
-			lscache.set("realmUser", realmUser, 480);
-			lscache.set("realmToken", realmToken, 480);
+			lscache.set("realmUser", realmUser, USER_CACHE_MINUTES);
+			lscache.set("realmToken", realmToken, USER_CACHE_MINUTES);
 			window.location.assign(window.location.href.replace(/[#?].*$/, ""));
 
 			throw "Reloading page to use new session";
@@ -59,7 +61,7 @@ export default class RealmClient {
 	}
 
 	async realmApi(url: string, opts?: Partial<RequestInit>): Promise<Response> {
-		return await fetch(`${realmApi}${url}`, {
+		return await fetch(`${REALM_API}${url}`, {
 			credentials: "omit",
 			...opts,
 			headers: {
@@ -86,16 +88,28 @@ export default class RealmClient {
 		});
 	}
 
-	async getSharedGuilds() {
-		return await this.realmApi("/auth/shared-guilds")
-			.then((r) => r.json())
-			.then((d) => d.guilds);
+	async getSharedGuilds(): Promise<NamedThing[]> {
+		lscache.setBucket("requests");
+
+		try {
+			const cachedGuilds: NamedThing[] | null = lscache.get("sharedGuilds");
+
+			if (cachedGuilds) return cachedGuilds;
+
+			const guilds: NamedThing[] = await this.realmApi("/auth/shared-guilds")
+				.then((r) => r.json())
+				.then((d) => d.guilds);
+			lscache.set("sharedGuilds", guilds, RESPONSE_CACHE_MINUTES);
+
+			return guilds!;
+		} finally {
+			lscache.resetBucket();
+		}
 	}
 
 	async logout() {
 		await this.realmApi("/auth/logout", { method: "POST" });
 		this.token = "";
-		lscache.remove("realmToken");
-		lscache.remove("realmUser");
+		lscache.flush();
 	}
 }
