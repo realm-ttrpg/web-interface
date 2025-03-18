@@ -15,7 +15,7 @@ onMounted(() => doneLoading());
 <template>
 	<h1>
 		<img src="@/assets/favicon.gif" class="dib" />
-		Realm TTRPG
+		Realm
 	</h1>
 	<p>
 		You are logged in as
