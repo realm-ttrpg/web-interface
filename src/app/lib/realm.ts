@@ -12,7 +12,7 @@ export type RealmUser = {
 /** Realm REST API client */
 export default class RealmClient {
 	private token: string;
-	private readonly user: RealmUser;
+	readonly user: RealmUser;
 
 	constructor(user: RealmUser, token: string) {
 		this.token = token;

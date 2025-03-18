@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { User } from "@/lib/discord";
+import { RealmUser } from "@/lib/realm";
 
 defineProps<{
-	user: User;
+	user: RealmUser;
 	size: number;
 }>();
 </script>
