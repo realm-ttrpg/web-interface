@@ -1,14 +1,11 @@
 <script lang="ts" setup>
-import DiscordClient from "@/lib/discord";
-import { doneLoading } from "@/lib/global";
-import RealmClient from "@/lib/realm";
+import { doneLoading } from "@/app/lib/global";
+import RealmClient from "@/app/lib/realm";
 import { inject, onMounted } from "vue";
 
-const discord: DiscordClient = inject("discordClient")!;
 const realm: RealmClient = inject("realmClient")!;
 
 await realm.logout();
-await discord.logout();
 
 onMounted(() => doneLoading());
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { RealmUser } from "@/lib/realm";
+import { RealmUser } from "@/app/lib/realm";
 
 defineProps<{
 	user: RealmUser;
@@ -9,8 +9,6 @@ defineProps<{
 
 <template>
 	<img
-		:height="size"
 		:src="`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.jpg?size=${size}`"
-		:width="size"
 	/>
 </template>

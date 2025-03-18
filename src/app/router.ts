@@ -1,5 +1,5 @@
-import { loading } from "@/lib/global";
 import { createRouter, createWebHashHistory } from "vue-router";
+import { loading } from "./lib/global";
 import Logout from "./views/logout.vue";
 import Main from "./views/main.vue";
 

@@ -7,7 +7,7 @@
 		"experimentalDecorators": true,
 		"lib": ["ES6", "DOM", "DOM.Iterable"],
 		"paths": {
-			"@/*": ["./src/app/*"]
+			"@/*": ["./src/*"]
 		},
 		"module": "ESNext",
 		"moduleResolution": "Node",

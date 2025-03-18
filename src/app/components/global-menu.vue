@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import router from "@/router";
+import router from "@/app/router";
 import { Ref, ref } from "vue";
 
 const details: Ref<HTMLDetailsElement | undefined> = ref();
