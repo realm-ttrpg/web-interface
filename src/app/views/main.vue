@@ -5,8 +5,6 @@ import RealmClient from "@/app/lib/realm";
 import { inject, onMounted } from "vue";
 
 const realm: RealmClient = inject("realmClient")!;
-
-// filter to guilds shared with the bot
 const sharedGuilds = await realm.getSharedGuilds();
 
 onMounted(() => doneLoading());
@@ -20,7 +18,7 @@ onMounted(() => doneLoading());
 	<p>
 		You are logged in as
 		<DiscordAvatar
-			class="am dib mr-xxs x-av"
+			class="am dib mr-xxs"
 			:user="realm.user"
 			:size="128"
 		></DiscordAvatar>
@@ -42,7 +40,7 @@ h1 img {
 	width: 0.75em;
 }
 
-.x-av {
+p img {
 	height: 1.2em;
 	width: 1.2em;
 }

@@ -1,4 +1,4 @@
-import Cookies from "js-cookie";
+import lscache from "lscache";
 import DiscordClient from "./discord";
 
 const realmApi = import.meta.env.VITE_APP_REALM_API;
@@ -20,10 +20,8 @@ export default class RealmClient {
 	}
 
 	static async create() {
-		let realmToken = Cookies.get("realmToken");
-		let realmUser: RealmUser | null = JSON.parse(
-			localStorage.getItem("realm.user") ?? "null",
-		);
+		let realmToken: string | null = lscache.get("realmToken");
+		let realmUser: RealmUser | null = lscache.get("realmUser");
 
 		if (!realmToken || !realmUser) {
 			const discord = new DiscordClient();
@@ -50,15 +48,9 @@ export default class RealmClient {
 				name: loginResponse.user.name,
 				avatar: loginResponse.user.avatar,
 			};
-			localStorage.setItem("realm.user", JSON.stringify(realmUser));
-			Cookies.set("realmToken", realmToken!, {
-				expires: 30,
-				sameSite: "strict",
-				secure: true,
-			});
-
-			const redirectUri = window.location.href.replace(/[#?].*$/, "");
-			window.location.assign(redirectUri);
+			lscache.set("realmUser", realmUser, 480);
+			lscache.set("realmToken", realmToken, 480);
+			window.location.assign(window.location.href.replace(/[#?].*$/, ""));
 
 			throw "Reloading page to use new session";
 		}
@@ -78,8 +70,8 @@ export default class RealmClient {
 			},
 		}).then((r) => {
 			if (r.status === 401 || r.status === 403) {
-				Cookies.remove("realmToken");
-				localStorage.removeItem("realm.user");
+				lscache.remove("realmToken");
+				lscache.remove("realmUser");
 				window.location.reload();
 				throw "Realm auth bad/expired; reloading page";
 			} else if (r.status === 429) {
@@ -103,6 +95,7 @@ export default class RealmClient {
 	async logout() {
 		await this.realmApi("/auth/logout", { method: "POST" });
 		this.token = "";
-		Cookies.remove("realmToken");
+		lscache.remove("realmToken");
+		lscache.remove("realmUser");
 	}
 }

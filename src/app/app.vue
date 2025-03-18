@@ -1,12 +1,11 @@
 <script lang="ts" setup>
+import lscache from "lscache";
 import { onMounted, provide } from "vue";
 import GlobalMenu from "./components/global-menu.vue";
 import RealmClient from "./lib/realm";
 
-// make sure we're logged into realm
-const realm = await RealmClient.create();
-
-provide("realmClient", realm);
+lscache.flushExpired();
+provide("realmClient", await RealmClient.create());
 
 onMounted(() => {
 	document.getElementById("apploading")!.remove();
