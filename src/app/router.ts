@@ -19,6 +19,6 @@ const router = createRouter({
 	],
 });
 
-router.beforeEach(() => loading());
+router.beforeEach(loading);
 
 export default router;
